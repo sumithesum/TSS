@@ -1,0 +1,47 @@
+main {
+    margin-top: 60px;
+  }
+
+  #content {
+    display: none;
+  }
+
+  form {
+    width: 350px;
+    margin-bottom: 10px;
+  }
+
+  ul {
+    margin-bottom: 0px;
+  }
+
+  #completedTaskList .content {
+    color: grey;
+    text-decoration: line-through;
+  }
+
+  .loanItem {
+    display: flex;
+    align-items: center;
+  }
+
+  .bullet {
+    width: 12px;
+    height: 12px;
+    background-color: grey;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  #balance{
+    color:green;
+  }
+
+  .center-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh; /* vh stands for viewport height */
+
+  }
+
+  .title1{font-size: 20px;}

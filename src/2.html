@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Sistem de Imprumuturi DeFi</title>
+
+    <!-- Bootstrap -->
+    <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="style.css">
+    <title>Loaning and Borrowing Interface</title>
+</head>
+<body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="https://github.com/TeodoraSumurduc/Sistem-de-Imprumuturi-DeFi" target="_blank">Sistem de Imprumuturi DeFi</a>
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap d-none d-sm-none d-sm-block">
+            <small><a class="nav-link" href="#"><span id="account"></span></a></small>
+          </li>
+        </ul>
+      </nav>
+      <br>
+      <br>
+      <div class="container">
+        Lented: <span id="lended">0</span>
+    </div>
+    <div class="container">
+        <div>
+            <h2>Request Loan</h2>
+            <form id="createLoanForm">
+                <label for="loanAmount">Loan Amount:</label>
+                <input type="number" id="loanAmount" required>
+                <br>
+                <button type="submit">Create Loan</button>
+            </form>
+        </div>
+        <div>
+            <h2>Repay Loan</h2>
+            <form id="repayLoanForm">
+                <label for="loanIndex">Loan Index:</label>
+                <input type="number" id="loanIndex" required>
+                <br>
+                <button type="submit">Repay Loan</button>
+            </form>
+        </div>
+        <div>
+            <h2>Lend</h2>
+            <form id="lendForm">
+                <label for="lendAmount">Lend Amount:</label>
+                <input type="number" id="lendAmount" required>
+                <br>
+                <button type="submit">Lend</button>
+            </form>
+            <button onclick="f2()">Withdraw</button>
+        </div>
+        <div>
+            <h2>Active Loans</h2>
+            <ul id="activeLoansList"></ul>
+        </div>
+        <div>
+            <h2>Paid Loans</h2>
+            <ul id="paidLoansList"></ul>
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendor/truffle-contract/dist/truffle-contract.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="app2.js"></script>
+    <script>
+        document.getElementById('createLoanForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const amount = document.getElementById('loanAmount').value;
+            await App.requestLoan(amount);
+        });
+
+        document.getElementById('repayLoanForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const index = document.getElementById('loanIndex').value;
+            await App.payLoan(index);
+        });
+
+        document.getElementById('lendForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const amount = document.getElementById('lendAmount').value;
+            await App.lend(amount);
+        });
+
+        window.addEventListener('load', async () => {
+            await App.load();
+            await App.renderLoans();
+        });
+
+        function f2() {
+
+            App.withdraw();
+        }
+    </script>
+</body>
+</html>
