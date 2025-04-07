@@ -1399,15 +1399,15 @@
     "absolutePath": "project:/contracts/LoanLibrary.sol",
     "exportedSymbols": {
       "LoanLibrary": [
-        1206
+        1247
       ]
     },
-    "id": 1207,
+    "id": 1248,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1188,
+        "id": 1229,
         "literals": [
           "solidity",
           "^",
@@ -1424,9 +1424,9 @@
         "contractDependencies": [],
         "contractKind": "library",
         "fullyImplemented": true,
-        "id": 1206,
+        "id": 1247,
         "linearizedBaseContracts": [
-          1206
+          1247
         ],
         "name": "LoanLibrary",
         "nameLocation": "69:11:6",
@@ -1434,7 +1434,7 @@
         "nodes": [
           {
             "body": {
-              "id": 1204,
+              "id": 1245,
               "nodeType": "Block",
               "src": "181:47:6",
               "statements": [
@@ -1444,7 +1444,7 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 1202,
+                    "id": 1243,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1456,17 +1456,17 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 1199,
+                          "id": 1240,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-                            "id": 1197,
+                            "id": 1238,
                             "name": "amount",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1190,
+                            "referencedDeclaration": 1231,
                             "src": "200:6:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1476,11 +1476,11 @@
                           "nodeType": "BinaryOperation",
                           "operator": "*",
                           "rightExpression": {
-                            "id": 1198,
+                            "id": 1239,
                             "name": "rate",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1192,
+                            "referencedDeclaration": 1233,
                             "src": "209:4:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1494,7 +1494,7 @@
                           }
                         }
                       ],
-                      "id": 1200,
+                      "id": 1241,
                       "isConstant": false,
                       "isInlineArray": false,
                       "isLValue": false,
@@ -1511,7 +1511,7 @@
                     "operator": "/",
                     "rightExpression": {
                       "hexValue": "313030",
-                      "id": 1201,
+                      "id": 1242,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1531,15 +1531,15 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 1196,
-                  "id": 1203,
+                  "functionReturnParameters": 1237,
+                  "id": 1244,
                   "nodeType": "Return",
                   "src": "192:28:6"
                 }
               ]
             },
             "functionSelector": "efdd7c07",
-            "id": 1205,
+            "id": 1246,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1547,17 +1547,17 @@
             "nameLocation": "103:17:6",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1193,
+              "id": 1234,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1190,
+                  "id": 1231,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "129:6:6",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1205,
+                  "scope": 1246,
                   "src": "121:14:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1566,7 +1566,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1189,
+                    "id": 1230,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "121:7:6",
@@ -1579,12 +1579,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1192,
+                  "id": 1233,
                   "mutability": "mutable",
                   "name": "rate",
                   "nameLocation": "145:4:6",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1205,
+                  "scope": 1246,
                   "src": "137:12:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1593,7 +1593,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1191,
+                    "id": 1232,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "137:7:6",
@@ -1608,17 +1608,17 @@
               "src": "120:30:6"
             },
             "returnParameters": {
-              "id": 1196,
+              "id": 1237,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1195,
+                  "id": 1236,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1205,
+                  "scope": 1246,
                   "src": "172:7:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1627,7 +1627,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1194,
+                    "id": 1235,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "172:7:6",
@@ -1641,14 +1641,14 @@
               ],
               "src": "171:9:6"
             },
-            "scope": 1206,
+            "scope": 1247,
             "src": "94:134:6",
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 1207,
+        "scope": 1248,
         "src": "61:170:6",
         "usedErrors": []
       }
@@ -1661,7 +1661,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-21T08:22:10.381Z",
+  "updatedAt": "2025-04-07T04:20:05.799Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -113,42 +113,43 @@ contract LendingAndLoaning is Ownable {
     }
 
     function lend(address _borrower, uint256 _amount) public payable {
-        require(msg.value == _amount, "Sent ETH amount does not match the lend amount");
-        require(_amount < address(msg.sender).balance, "Nu sunt destui bani in cont");
+    require(msg.value == _amount, "Sent ETH amount does not match the lend amount");
+    require(_amount <= address(msg.sender).balance, "Not enough balance to lend");
 
-        (bool userPresent, int256 userIndex) = helper.isUserIn(_borrower, borrowers);
-        if (userPresent) {
-            ethLentAmount[_borrower] += _amount;
-            noOfEthLent += _amount;
-            emit Lend(
-                msg.sender,
-                _amount,
-                noOfEthLent,
-                userPresent,
-                userIndex,
-                lenders,
-                ethLentAmount[_borrower]
-            );
-        } else {
-            lenders.push(_borrower);
-            ethLentAmount[_borrower] += _amount;
-            noOfEthLent += _amount;
-            emit Lend(
-                msg.sender,
-                _amount,
-                noOfEthLent,
-                userPresent,
-                userIndex,
-                lenders,
-                ethLentAmount[_borrower]
-            );
-        }
-
+    (bool userPresent, int256 userIndex) = helper.isUserIn(_borrower, borrowers);
+    if (userPresent) {
+        ethLentAmount[msg.sender] += _amount;
+        noOfEthLent += _amount;
+        emit Lend(
+            msg.sender,
+            _amount,
+            noOfEthLent,
+            userPresent,
+            userIndex,
+            lenders,
+            ethLentAmount[msg.sender] // corectat pentru lender
+        );
+    } else {
+        borrowers.push(_borrower);
+        lenders.push(msg.sender); // adăugați lender în lista
+        ethLentAmount[msg.sender] += _amount;
+        noOfEthLent += _amount;
+        emit Lend(
+            msg.sender,
+            _amount,
+            noOfEthLent,
+            userPresent,
+            userIndex,
+            lenders,
+            ethLentAmount[msg.sender] // corectat pentru lender
+        );
     }
+}
 
     function createLoan(uint256 _amount,  uint _dueDate) public payable  {
         require(_amount > 0, "Invalid loan amount");
-        require(_amount <= noOfEthLent, "Invalid due date");
+        require(noOfEthLent >= _amount, "Not enough ETH available for lending");
+
         (bool userPresent, int256 userIndex) = helper.isUserIn(msg.sender, borrowers);
         userIndex = userIndex;
          activeLoans[msg.sender].push(Loan(_amount, 10, _dueDate, msg.sender, false, false));
@@ -164,16 +165,16 @@ contract LendingAndLoaning is Ownable {
     }
 
     function payLoan(address _borrower, uint256 _index) public payable {
-        require(_index < activeLoans[_borrower].length, "Invalid index");
-        require(activeLoans[_borrower][_index].isRepaid == false, "Loan already repaid");
+    require(_index < activeLoans[_borrower].length, "Invalid index");
+    require(activeLoans[_borrower][_index].isRepaid == false, "Loan already repaid");
 
-       
-        activeLoans[_borrower][_index].isRepaid = true;
-        paidLoans[_borrower].push(activeLoans[_borrower][_index]);
+    uint256 amountToPay = activeLoans[_borrower][_index].amount + calculateInterest(activeLoans[_borrower][_index].amount, activeLoans[_borrower][_index].interest);
 
-        noOfEthLent += activeLoans[_borrower][_index].amount;
-        totalEthWon +=  activeLoans[_borrower][_index].interest / 100;
     
-    }
+    activeLoans[_borrower][_index].isRepaid = true;
+    paidLoans[_borrower].push(activeLoans[_borrower][_index]);
 
+    noOfEthLent += activeLoans[_borrower][_index].amount;
+    totalEthWon += calculateInterest(activeLoans[_borrower][_index].amount, activeLoans[_borrower][_index].interest);
+}
 }
