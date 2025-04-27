@@ -4,11 +4,10 @@ const LendingAndLoaning = artifacts.require("LendingAndLoaning");
 contract("LendingAndLoaning", (accounts) => {
     const lender = accounts[0]; // Adresa lender-ului
     const borrower = accounts[1]; // Adresa borrower-ului
-    const lendAmount = web3.utils.toWei("1", "ether"); // Suma de împrumut (1 ETH)
+    const lendAmount = web3.utils.toWei("1", "ether"); // Suma de Ã®mprumut (1 ETH)
 
     let lendingContract;
 
-    // Reîncarcă contractul cu ETH înainte de fiecare test
     beforeEach(async () => {
         lendingContract = await LendingAndLoaning.new();
     });
@@ -16,10 +15,9 @@ contract("LendingAndLoaning", (accounts) => {
     it("should allow a lender to lend ETH", async () => {
         const result = await lendingContract.lend(borrower, lendAmount, { from: lender, value: lendAmount });
 
-        // Adaugă loguri pentru a verifica evenimentul
+ 
         console.log("Event Lend Emitted:", result.logs);
 
-        // Verificăm că evenimentul Lend a fost emis corect
         truffleAssert.eventEmitted(result, 'Lend', (ev) => {
             console.log("Sender:", ev.sender);
             console.log("Amount In Dollars:", ev.amountInDollars.toString());
@@ -39,8 +37,8 @@ contract("LendingAndLoaning", (accounts) => {
     });
 
     it("should allow a borrower to take a loan", async () => {
-        const loanAmount = web3.utils.toWei("1", "ether"); // 1 ETH în Wei
-        const dueDate = Math.floor(Date.now() / 1000) + 3600; // 1 oră în viitor
+        const loanAmount = web3.utils.toWei("1", "ether"); 
+        const dueDate = Math.floor(Date.now() / 1000) + 3600; 
         
         await lendingContract.lend(borrower, lendAmount, { from: lender, value: lendAmount });
         
@@ -52,21 +50,43 @@ contract("LendingAndLoaning", (accounts) => {
     });
 
     it("should allow a borrower to repay a loan", async () => {
-    const loanAmount = web3.utils.toWei("1", "ether"); // 1 ETH
+    const loanAmount = web3.utils.toWei("1", "ether"); 
     const repayAmount = loanAmount; 
-    const dueDate = Math.floor(Date.now() / 1000) + 3600; // 1 oră în viitor
+    const dueDate = Math.floor(Date.now() / 1000) + 3600; 
 
 
     await lendingContract.lend(borrower, loanAmount, { from: lender, value: lendAmount });
-    // Crearea unui împrumut
+  
     await lendingContract.createLoan(loanAmount, dueDate, { from: borrower });
     var borrowerLoans = await lendingContract.getPaidLoans(borrower);
 
-    // Plata împrumutului
+
     await lendingContract.payLoan(borrower, borrowerLoans.length, { from: lender, value: repayAmount });
     borrowerLoans = await lendingContract.getPaidLoans(borrower);
     
     assert.equal(borrowerLoans.length, 1);
     assert.equal(borrowerLoans[0].amount.toString(), loanAmount);
+    });
+
+    it("should not allow repaying an already repaid loan", async () => {
+        const loanAmount = web3.utils.toWei("1", "ether"); 
+    const repayAmount = loanAmount; 
+    const dueDate = Math.floor(Date.now() / 1000) + 3600; 
+
+
+    await lendingContract.lend(borrower, loanAmount, { from: lender, value: lendAmount });
+  
+    await lendingContract.createLoan(loanAmount, dueDate, { from: borrower });
+    var borrowerLoans = await lendingContract.getPaidLoans(borrower);
+
+
+    await lendingContract.payLoan(borrower, borrowerLoans.length , { from: lender, value: repayAmount });
+    borrowerLoans = await lendingContract.getPaidLoans(borrower);
+    
+    await truffleAssert.reverts(
+        lendingContract.payLoan(borrower, borrowerLoans.length -1, { from: borrower, value: repayAmount }),
+        "Loan already repaid",
+        "Should not allow double repayment"
+    );
     });
 });
