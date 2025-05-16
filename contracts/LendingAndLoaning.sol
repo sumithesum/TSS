@@ -90,27 +90,26 @@ contract LendingAndLoaning is Ownable {
         return ethLentAmount[_lender];
     }
 
-    function withdraw() public payable {
-        require(address(this).balance >= ethLentAmount[msg.sender], "Insufficient lent amount");
+     function withdraw() public {
+    uint256 value = ethLentAmount[msg.sender];
+    require(value > 0, "Nothing to withdraw");
 
-        uint256 value = ethLentAmount[msg.sender];
-        emit Debug("Withdraw function called", value);
-        emit DebugAddress("Withdraw address", msg.sender);
 
-        if (block.timestamp >= lendTimestamps[msg.sender] + 30 days) {
-            uint256 ReciveValue = value + totalEthWon / lenders.length;
-            ethLentAmount[msg.sender] = 0;
-            totalEthWon -= totalEthWon / lenders.length;
-            emit Debug("Withdraw amount with interest", ReciveValue);
-            payable(msg.sender).transfer(ReciveValue);
-        } else {
-            ethLentAmount[msg.sender] = 0;
-            emit Debug("Withdraw amount without interest", value);
-            payable(msg.sender).transfer(value);
-        }
+    emit Debug("Withdraw function called", value);
+    emit DebugAddress("Withdraw address", msg.sender);
 
-        emit Withdraw();
-    }
+    uint256 toTransfer = value;
+    
+    
+
+    
+    ethLentAmount[msg.sender] = 0;
+    noOfEthLent -= value;
+    lendTimestamps[msg.sender] = 0;
+
+    payable(msg.sender).transfer(toTransfer);
+    emit Withdraw();
+}
 
     function lend(address _borrower, uint256 _amount) public payable {
     require(msg.value == _amount, "Sent ETH amount does not match the lend amount");

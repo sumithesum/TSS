@@ -5,24 +5,22 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 
 library helper {
-      function isUserIn(address userAddress, address[] memory users)internal pure returns (bool, int256){
-      if (users.length > 0) {
-          for (uint256 i = 0; i < users.length; i++) {
-              if (userAddress == users[i]) {
-                  return (true, int256(i));
-              }
-          }
-      }
-      return (false, -1);
-  }
+      function isUserIn(address user, address[] storage list) internal view returns (bool, int256) {
+        for (uint256 i = 0; i < list.length; i++) {
+            if (list[i] == user) {
+                return (true, int256(i));
+            }
+        }
+        return (false, -1);
+    }
 
-  function indexOf(address user, address[] memory addressArray)internal pure returns (int256){
-      for (uint256 i = 0; i < addressArray.length; i++) {
-          if (user ==  addressArray[i]) {
-              return int256(i);
-          }
-      }
-      return -1;
-  }
+    function addressInList(address user, address[] storage list) internal view returns (bool) {
+        for (uint256 i = 0; i < list.length; i++) {
+            if (list[i] == user) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

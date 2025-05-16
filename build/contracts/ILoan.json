@@ -93,7 +93,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.13;\r\n\r\ninterface ILoan {\r\n    struct Loan {\r\n        uint amount;\r\n        uint interest; \r\n        uint dueDate;\r\n        address borrower;\r\n        bool isRepaid; \r\n    }\r\n    function createLoan( uint _amount, uint _dueDate) external payable;\r\n    function getActiveLoans(address _borrower) external view returns (Loan[] memory);\r\n    function repayLoan(address _borrower, uint _index) external payable;\r\n}\r\n",
-  "sourcePath": "C:\\Users\\sumur\\Desktop\\An3\\Sistem-de-Imprumuturi-DeFi\\contracts\\ILoan.sol",
+  "sourcePath": "C:\\Users\\sumur\\Desktop\\An3\\TSS\\contracts\\ILoan.sol",
   "ast": {
     "absolutePath": "project:/contracts/ILoan.sol",
     "exportedSymbols": {
@@ -558,7 +558,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-04-07T04:20:05.776Z",
+  "updatedAt": "2025-05-16T16:23:57.755Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

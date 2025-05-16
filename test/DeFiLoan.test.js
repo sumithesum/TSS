@@ -35,6 +35,18 @@ contract("LendingAndLoaning", (accounts) => {
         const lentAmount = await lendingContract.getEthLentAmount(lender);
         assert.equal(lentAmount.toString(), lendAmount, "Lent amount is incorrect");
     });
+    it("should allow lender to withdraw funds after lending", async () => {
+
+    
+    await lendingContract.lend(borrower, lendAmount, { from: lender, value: lendAmount });
+
+    const tx = await lendingContract.withdraw({ from: lender });
+
+    const lentAmount = await lendingContract.getEthLentAmount(lender);
+    assert.equal(lentAmount.toString(), "0", "Eth lent amount should be reset to 0");
+
+});
+
 
     it("should allow a borrower to take a loan", async () => {
         const loanAmount = web3.utils.toWei("1", "ether"); 
@@ -51,62 +63,59 @@ contract("LendingAndLoaning", (accounts) => {
 
     it("should allow a borrower to repay a loan", async () => {
     const loanAmount = web3.utils.toWei("1", "ether"); 
-    const repayAmount = loanAmount; 
     const dueDate = Math.floor(Date.now() / 1000) + 3600; 
-
-
-    await lendingContract.lend(borrower, loanAmount, { from: lender, value: lendAmount });
-  
-    await lendingContract.createLoan(loanAmount, dueDate, { from: borrower });
-    var borrowerLoans = await lendingContract.getPaidLoans(borrower);
-
-
-    await lendingContract.payLoan(borrower, borrowerLoans.length, { from: lender, value: repayAmount });
-    borrowerLoans = await lendingContract.getPaidLoans(borrower);
     
+    await lendingContract.lend(borrower, loanAmount, { from: lender, value: loanAmount });
+    await lendingContract.createLoan(loanAmount, dueDate, { from: borrower });
+
+    const interest = web3.utils.toBN(loanAmount).muln(10).divn(100); 
+    const repayAmount = web3.utils.toBN(loanAmount).add(interest);   
+
+    await lendingContract.payLoan(borrower, 0, { from: lender, value: repayAmount });
+
+    const borrowerLoans = await lendingContract.getPaidLoans(borrower);
     assert.equal(borrowerLoans.length, 1);
     assert.equal(borrowerLoans[0].amount.toString(), loanAmount);
-    });
-
+});
     it("should not allow repaying an already repaid loan", async () => {
-        const loanAmount = web3.utils.toWei("1", "ether"); 
-    const repayAmount = loanAmount; 
+    const loanAmount = web3.utils.toWei("1", "ether"); 
     const dueDate = Math.floor(Date.now() / 1000) + 3600; 
 
-
-    await lendingContract.lend(borrower, loanAmount, { from: lender, value: lendAmount });
-  
+    await lendingContract.lend(borrower, loanAmount, { from: lender, value: loanAmount });
     await lendingContract.createLoan(loanAmount, dueDate, { from: borrower });
-    var borrowerLoans = await lendingContract.getPaidLoans(borrower);
 
+    const interest = web3.utils.toBN(loanAmount).muln(10).divn(100);
+    const repayAmount = web3.utils.toBN(loanAmount).add(interest);
 
-    await lendingContract.payLoan(borrower, borrowerLoans.length , { from: lender, value: repayAmount });
-    borrowerLoans = await lendingContract.getPaidLoans(borrower);
-    
+    await lendingContract.payLoan(borrower, 0, { from: lender, value: repayAmount });
+
     await truffleAssert.reverts(
-        lendingContract.payLoan(borrower, borrowerLoans.length -1, { from: borrower, value: repayAmount }),
+        lendingContract.payLoan(borrower, 0, { from: borrower, value: repayAmount }),
         "Loan already repaid",
         "Should not allow double repayment"
-        );
-    });
+    );
+});
+
     
     //integritate test
     it("should allow full lending and borrowing cycle", async () => {
-        const loanAmount = web3.utils.toWei("1", "ether");
-        const dueDate = Math.floor(Date.now() / 1000) + 3600;
-    
-        
-        await lendingContract.lend(borrower, loanAmount, { from: lender, value: loanAmount });
-    
-       
-        await lendingContract.createLoan(loanAmount, dueDate, { from: borrower });
-    
-       
-        await lendingContract.payLoan(borrower, 0, { from: lender, value: loanAmount });
-    
-        const paidLoans = await lendingContract.getPaidLoans(borrower);
-        assert.equal(paidLoans.length, 1, "Loan should be marked as paid");
-    });
+    const loanAmount = web3.utils.toWei("1", "ether");
+    const dueDate = Math.floor(Date.now() / 1000) + 3600;
+
+    await lendingContract.lend(borrower, loanAmount, { from: lender, value: loanAmount });
+    await lendingContract.createLoan(loanAmount, dueDate, { from: borrower });
+
+    const interest = web3.utils.toBN(loanAmount).muln(10).divn(100);
+    const repayAmount = web3.utils.toBN(loanAmount).add(interest);
+
+    await lendingContract.payLoan(borrower, 0, { from: lender, value: repayAmount });
+
+    await lendingContract.withdraw({ from: lender });
+
+    const paidLoans = await lendingContract.getPaidLoans(borrower);
+    assert.equal(paidLoans.length, 1, "Loan should be marked as paid");
+});
+
 
 
     //performanta test
@@ -132,27 +141,30 @@ contract("LendingAndLoaning", (accounts) => {
         console.log("Gas used for createLoan:", tx.receipt.gasUsed);
         assert.isBelow(tx.receipt.gasUsed, 200000, "Gas usage for createLoan is too high");
     });
-    it("should measure gas used for paying back a loan", async () => {
-        const dueDate = Math.floor(Date.now() / 1000) + 3600;
-    
-        
-        await lendingContract.lend(borrower, lendAmount, {
-            from: lender,
-            value: lendAmount
-        });
-    
-        await lendingContract.createLoan(lendAmount, dueDate, {
-            from: borrower
-        });
-    
-        const tx = await lendingContract.payLoan(borrower, 0, {
-            from: lender,
-            value: lendAmount
-        });
-    
-        console.log("Gas used for payLoan:", tx.receipt.gasUsed);
-        assert.isBelow(tx.receipt.gasUsed, 200000, "Gas usage for payLoan is too high");
+   it("should measure gas used for paying back a loan", async () => {
+    const dueDate = Math.floor(Date.now() / 1000) + 3600;
+
+    await lendingContract.lend(borrower, lendAmount, {
+        from: lender,
+        value: lendAmount
     });
+
+    await lendingContract.createLoan(lendAmount, dueDate, {
+        from: borrower
+    });
+
+    const interest = web3.utils.toBN(lendAmount).muln(10).divn(100);
+    const repayAmount = web3.utils.toBN(lendAmount).add(interest);
+
+    const tx = await lendingContract.payLoan(borrower, 0, {
+        from: lender,
+        value: repayAmount
+    });
+
+    console.log("Gas used for payLoan:", tx.receipt.gasUsed);
+    assert.isBelow(tx.receipt.gasUsed, 200000, "Gas usage for payLoan is too high");
+});
+
     it("should measure gas used for lending and taking back the lending", async () => {
         await lendingContract.lend(borrower, lendAmount, { from: lender, value: lendAmount });
 
@@ -163,6 +175,8 @@ contract("LendingAndLoaning", (accounts) => {
         assert.isBelow(tx.receipt.gasUsed, 200000, "Gas usage is too high");
  
     });
+   
+
 
 });
 

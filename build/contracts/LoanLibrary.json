@@ -1394,20 +1394,20 @@
   "sourceMap": "61:170:6:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "61:170:6:-:0;;;;;;;;;;;;;;;;;;;;;;;;94:134;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;;172:7;217:3;209:4;200:6;:13;;;;:::i;:::-;199:21;;;;:::i;:::-;192:28;;94:134;;;;:::o;88:117:10:-;197:1;194;187:12;334:77;371:7;400:5;389:16;;334:77;;;:::o;417:122::-;490:24;508:5;490:24;:::i;:::-;483:5;480:35;470:63;;529:1;526;519:12;470:63;417:122;:::o;545:139::-;591:5;629:6;616:20;607:29;;645:33;672:5;645:33;:::i;:::-;545:139;;;;:::o;690:474::-;758:6;766;815:2;803:9;794:7;790:23;786:32;783:119;;;821:79;;:::i;:::-;783:119;941:1;966:53;1011:7;1002:6;991:9;987:22;966:53;:::i;:::-;956:63;;912:117;1068:2;1094:53;1139:7;1130:6;1119:9;1115:22;1094:53;:::i;:::-;1084:63;;1039:118;690:474;;;;;:::o;1170:126::-;1265:24;1283:5;1265:24;:::i;:::-;1260:3;1253:37;1170:126;;:::o;1302:238::-;1403:4;1441:2;1430:9;1426:18;1418:26;;1454:79;1530:1;1519:9;1515:17;1506:6;1454:79;:::i;:::-;1302:238;;;;:::o;1546:180::-;1594:77;1591:1;1584:88;1691:4;1688:1;1681:15;1715:4;1712:1;1705:15;1732:348;1772:7;1795:20;1813:1;1795:20;:::i;:::-;1790:25;;1829:20;1847:1;1829:20;:::i;:::-;1824:25;;2017:1;1949:66;1945:74;1942:1;1939:81;1934:1;1927:9;1920:17;1916:105;1913:131;;;2024:18;;:::i;:::-;1913:131;2072:1;2069;2065:9;2054:20;;1732:348;;;;:::o;2086:180::-;2134:77;2131:1;2124:88;2231:4;2228:1;2221:15;2255:4;2252:1;2245:15;2272:185;2312:1;2329:20;2347:1;2329:20;:::i;:::-;2324:25;;2363:20;2381:1;2363:20;:::i;:::-;2358:25;;2402:1;2392:35;;2407:18;;:::i;:::-;2392:35;2449:1;2446;2442:9;2437:14;;2272:185;;;;:::o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.13;\r\n\r\nlibrary LoanLibrary {\r\n    \r\n    function calculateInterest(uint256 amount, uint256 rate) public pure returns (uint256) {\r\n        return (amount * rate) / 100;\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\sumur\\Desktop\\An3\\Sistem-de-Imprumuturi-DeFi\\contracts\\LoanLibrary.sol",
+  "sourcePath": "C:\\Users\\sumur\\Desktop\\An3\\TSS\\contracts\\LoanLibrary.sol",
   "ast": {
     "absolutePath": "project:/contracts/LoanLibrary.sol",
     "exportedSymbols": {
       "LoanLibrary": [
-        1247
+        1201
       ]
     },
-    "id": 1248,
+    "id": 1202,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1229,
+        "id": 1183,
         "literals": [
           "solidity",
           "^",
@@ -1424,9 +1424,9 @@
         "contractDependencies": [],
         "contractKind": "library",
         "fullyImplemented": true,
-        "id": 1247,
+        "id": 1201,
         "linearizedBaseContracts": [
-          1247
+          1201
         ],
         "name": "LoanLibrary",
         "nameLocation": "69:11:6",
@@ -1434,7 +1434,7 @@
         "nodes": [
           {
             "body": {
-              "id": 1245,
+              "id": 1199,
               "nodeType": "Block",
               "src": "181:47:6",
               "statements": [
@@ -1444,7 +1444,7 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 1243,
+                    "id": 1197,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1456,17 +1456,17 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 1240,
+                          "id": 1194,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-                            "id": 1238,
+                            "id": 1192,
                             "name": "amount",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1231,
+                            "referencedDeclaration": 1185,
                             "src": "200:6:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1476,11 +1476,11 @@
                           "nodeType": "BinaryOperation",
                           "operator": "*",
                           "rightExpression": {
-                            "id": 1239,
+                            "id": 1193,
                             "name": "rate",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1233,
+                            "referencedDeclaration": 1187,
                             "src": "209:4:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1494,7 +1494,7 @@
                           }
                         }
                       ],
-                      "id": 1241,
+                      "id": 1195,
                       "isConstant": false,
                       "isInlineArray": false,
                       "isLValue": false,
@@ -1511,7 +1511,7 @@
                     "operator": "/",
                     "rightExpression": {
                       "hexValue": "313030",
-                      "id": 1242,
+                      "id": 1196,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1531,15 +1531,15 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 1237,
-                  "id": 1244,
+                  "functionReturnParameters": 1191,
+                  "id": 1198,
                   "nodeType": "Return",
                   "src": "192:28:6"
                 }
               ]
             },
             "functionSelector": "efdd7c07",
-            "id": 1246,
+            "id": 1200,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1547,17 +1547,17 @@
             "nameLocation": "103:17:6",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1234,
+              "id": 1188,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1231,
+                  "id": 1185,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "129:6:6",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1246,
+                  "scope": 1200,
                   "src": "121:14:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1566,7 +1566,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1230,
+                    "id": 1184,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "121:7:6",
@@ -1579,12 +1579,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 1233,
+                  "id": 1187,
                   "mutability": "mutable",
                   "name": "rate",
                   "nameLocation": "145:4:6",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1246,
+                  "scope": 1200,
                   "src": "137:12:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1593,7 +1593,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1232,
+                    "id": 1186,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "137:7:6",
@@ -1608,17 +1608,17 @@
               "src": "120:30:6"
             },
             "returnParameters": {
-              "id": 1237,
+              "id": 1191,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1236,
+                  "id": 1190,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1246,
+                  "scope": 1200,
                   "src": "172:7:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1627,7 +1627,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1235,
+                    "id": 1189,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "172:7:6",
@@ -1641,14 +1641,14 @@
               ],
               "src": "171:9:6"
             },
-            "scope": 1247,
+            "scope": 1201,
             "src": "94:134:6",
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 1248,
+        "scope": 1202,
         "src": "61:170:6",
         "usedErrors": []
       }
@@ -1661,7 +1661,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-04-07T04:20:05.799Z",
+  "updatedAt": "2025-05-16T16:23:57.765Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
